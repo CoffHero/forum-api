@@ -5,7 +5,7 @@ const CommentRepository = require('../../../Domains/comments/CommentRepository')
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository')
 const AddReplyUseCase = require('../AddReplyUseCase')
 
-describe('AddedReplyUseCase', () => {
+describe('AddReplyUseCase', () => {
   it('should orchestrating the new reply action correctly', async () => {
     // Arrange
     const useCasePayload = {
