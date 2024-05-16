@@ -26,7 +26,11 @@ DomainErrorTranslator._directories = {
   'NEW_REPLY.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat balasan karena properti yang dibutuhkan tidak ada'),
   'NEW_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat balasan karena tipe data tidak sesuai'),
   'DELETE_REPLY.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat menghapus balasan karena properti yang dibutuhkan tidak ada'),
-  'DELETE_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat menghapus balasan karena tipe data tidak sesuai')
+  'DELETE_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat menghapus balasan karena tipe data tidak sesuai'),
+  'NEW_COMMENT_LIKE.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat menambahkan like pada komentar karena properti yang dibutuhkan tidak ada'),
+  'NEW_COMMENT_LIKE.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat menambahkan like pada membuat komentar karena tipe data tidak sesuai'),
+  'DELETE_COMMENT_LIKE.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat menghapus like pada komentar karena properti yang dibutuhkan tidak ada'),
+  'DELETE_COMMENT_LIKE.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat menghapus like pada komentar karena tipe data tidak sesuai')
 }
 
 module.exports = DomainErrorTranslator

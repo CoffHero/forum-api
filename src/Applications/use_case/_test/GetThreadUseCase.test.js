@@ -2,6 +2,7 @@ const ThreadRepository = require('../../../Domains/threads/ThreadRepository')
 const CommentRepository = require('../../../Domains/comments/CommentRepository')
 const ReplyRepository = require('../../../Domains/replies/ReplyRepository')
 const GetThreadUseCase = require('../GetThreadUseCase')
+const CommentLikesRepository = require('../../../Domains/likes/CommentLikeRepository')
 
 describe('DetailThreadUseCase', () => {
   it('should get thread action correctly', async () => {
@@ -58,6 +59,15 @@ describe('DetailThreadUseCase', () => {
       }
     ]
 
+    const mockCommentlikes = [
+      {
+        id_comment: 'comment-123'
+      },
+      {
+        id_comment: 'comment-123'
+      }
+    ]
+
     const expectedDetailThread = {
       id: threadId,
       title: 'sebuah thread',
@@ -70,6 +80,7 @@ describe('DetailThreadUseCase', () => {
           username: 'dicoding1',
           date: '2024-05-07T05:50:15.640Z',
           content: '**komentar telah dihapus**',
+          likeCount: 2,
           replies: [
             {
               id: 'reply-123',
@@ -84,6 +95,7 @@ describe('DetailThreadUseCase', () => {
           username: 'dicoding2',
           date: '2024-05-07T05:50:15.640Z',
           content: 'ini comment 2',
+          likeCount: 0,
           replies: [
             {
               id: 'reply-234',
@@ -98,6 +110,7 @@ describe('DetailThreadUseCase', () => {
           username: 'dicoding3',
           date: '2024-05-07T05:50:15.640Z',
           content: 'ini comment 3',
+          likeCount: 0,
           replies: []
         }
       ]
@@ -106,6 +119,7 @@ describe('DetailThreadUseCase', () => {
     const mockThreadRepository = new ThreadRepository()
     const mockCommentRepository = new CommentRepository()
     const mockReplyRepository = new ReplyRepository()
+    const mockCommentLikeRepository = new CommentLikesRepository()
 
     mockThreadRepository.checkingThreadById = jest.fn()
       .mockImplementation(() => Promise.resolve(mockThread))
@@ -113,13 +127,16 @@ describe('DetailThreadUseCase', () => {
       .mockImplementation(() => Promise.resolve(mockThread))
     mockCommentRepository.getCommentsByThreadId = jest.fn()
       .mockImplementation(() => Promise.resolve(mockComments))
+    mockCommentLikeRepository.getCommentIdFromCommentLike = jest.fn()
+      .mockImplementation(() => Promise.resolve(mockCommentlikes))
     mockReplyRepository.getRepliesByThreadId = jest.fn()
       .mockImplementation(() => Promise.resolve(mockReplies))
 
     const getThreadUseCase = new GetThreadUseCase({
       threadRepository: mockThreadRepository,
       commentRepository: mockCommentRepository,
-      replyRepository: mockReplyRepository
+      replyRepository: mockReplyRepository,
+      commentLikeRepository: mockCommentLikeRepository
     })
 
     // Action
@@ -129,6 +146,7 @@ describe('DetailThreadUseCase', () => {
     expect(detailedThread).toStrictEqual(expectedDetailThread)
     expect(mockThreadRepository.getThreadById).toBeCalledWith(threadId)
     expect(mockCommentRepository.getCommentsByThreadId).toBeCalledWith(threadId)
+    expect(mockCommentLikeRepository.getCommentIdFromCommentLike).toBeCalledWith(threadId)
     expect(mockReplyRepository.getRepliesByThreadId).toBeCalledWith(threadId)
   })
 })
